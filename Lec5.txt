@@ -1,0 +1,148 @@
+DQL : 
+	Filteration
+
+SELECT * FROM employee WHERE salary = 7000;
+
+SELECT * FRO employee WHERE salary != 7000;
+
+SELECT * FROM employee WHERE salary <> 7000; -- <> means not equal
+
+SELECT * FROM emplyee WHERE salary >= 7000;
+
+SELECT * FROM employee WHERE salary = 8000 OR salary = 1000;
+
+SELECT * FROM employee WHERE job_title = 'trainer' AND salary < 9000;
+
+SELECT * FROM employee WHERE NOT salary = 6000;
+
+SELECT * FROM employee WHERE job_title = 'manager' OR job_title = 'developer';
+
+SELECT * FROM employee WHERE job_title IN ('manager','developer');
+
+SELECT * FROM employee WHERE job_title NOT IN ('manager','developer'); 
+
+SELECT * FROM employee WHERE dept_id IN (501,505) AND salary > 5000;
+
+SELECT * FROM employee WHERE salary >= 5000 AND salary <=7000;
+
+SELECT * FROM employee WHERE salary BETWEEN 5000 AND 7000; -- >> between as :  >= , <=
+
+SELECT * FROM employee WHERE salary NOT BETWEEN 5000 AND 7000;
+
+SELECT * FROM employee WHERE salary BETWEEN 4000 AND 8000 AND dept_id = 503;
+
+SELECT * FROM employee WHERE f_name = 'ahmed';
+
+SELECT * FROM employee WHERE f_name LIKE 'a';
+
+SELECT * FROM employee WHERE f_name LIKE 'a%'; -- % it's like infinite
+
+SELECT * FROM employee WHERE f_name LIKE '%a';
+
+SELECT * FROM employee WHERE f_name LIKE '%a%';
+
+wildCards % _ 
+% single or many characters
+_ single character
+
+SELECT * FROM employee WHERE f_name LIKE '%a%a%';
+
+SELECT * FROM employee WHERE f_name LIKE 'a_';
+
+SELECT * FROM employee WHERE f_name LIKE '_____';
+
+SELECT * FROM employee WHERE f_name LIKE '_a%';
+
+SELECT * FROM employee WHERE (f_name LIKE 'a%' OR f_name LIKE 'y%') AND job_title IN ('manager','developer')  ;
+
+SELECT 0 + 9; > 9
+
+SELECT NULL + 9; > NULL
+
+null can't compare and calculate
+
+
+SELECT * FROM employee WHERE bouns IS NULL;
+
+SELECT * FROM employee WHERE bouns IS NOT NULL;
+
+SELECT * FROM employee WHERE dept_id = 503 AND bonus IS NULL;
+
+SELECT * FROM employee ORDER BY salary; (default is acsending ASC)
+
+SELECT * FROM employee ORDER BY salary DESC;
+
+SELECT * FROM employee ORDER BY salary DESC,fname; (fname ASC)
+
+SELECT * FROM employee WHERE dept_id = 503 ORDER BY salary DESC;
+
+SELECT * FROM employee ORDER BY salary LIMIT 3;
+
+alias means recall field or table by calling him by another name,
+		alias doesn't rename it in database
+
+SELECT emp_id AS id,fname FROM employee;
+SELECT emp_id id,fname FROM employee;
+
+SELECT emp_id id FROM employee emp; >> alias
+
+SELECT fname ,lname ,j_t FROM employee ORDER BY j_t
+
+SELECT DISTINCT salary AS distinct_salary FROM employee; 
+
+////// single row function : one row at a time
+	mutiple row function (group function) : 
+IF in sql is a function
+ 
+SELECT fname,LENGTH(fname) FROM employee;
+
+
+SELECT fname,LENGTH(fname) AS length FROM employee;
+
+
+SELECT UPPER(fname),LOWER(fname) FROM employee;
+
+SELECT SUBSTRING(fname,2,4) FROM employee; > SUBSTRING(col_name , startFrom,length)
+
+SELECT SUBSTRING(fname,2) FROM employee;
+
+SELECT lname, INSTR(lname,'masry') FROM employee WHERE emp_id = 1001; > instr return position
+
+SELECT CONCAT(fname,' ',lname) AS 'full name' FROM employee; > concat means add string ,, '' to add space
+
+TRIM , LTRIM , RTRIM
+
+SELECT LTRIM(fname) FROM employee; > to remove spaces
+
+
+make yassin ali to Y.ali
+SELECT CONCAT (UPPER(SUBSTRING(fname,1,1))),'.',lname) FROM employee;
+
+SELECT REPLACE(name,'it','mis') FROM department; 
+
+SELECT NOW(); > to present current time , CURRENT_TIMESTAMP
+
+SELECT CURDATE(); > to show date , or CURRENT_DATE
+
+SELECT CURTIME(); > to show time
+
+SELECT YEAR(CURDATE());
+
+SELECT DAYNAME(CURDATE());
+
+SELECT QUARTER(CURDATE());
+
+SELECT fname,lname,YEAR(hire_date) FROM employee;
+
+SELECT fname,QUARTER(hire_date) quarter FROM employee ORDER BY quarter;
+
+SELECT TIMESTAMPDIFF(MONTH,2014-05-11,2019-11-21) > to show the difference between 2 dates
+
+SELECT STR_TO_DATE('12/04/2019','%d/%m/%Y')  > to convert from string to date
+
+SELECT POW(2,4); > for power
+
+sql tryit editor, w3 school ///// website
+
+
+

@@ -1,0 +1,130 @@
+Control Flow Functions:
+-----------------------
+
+IF (condition, value_ if_true, value_if_false);
+
+SELECT fname,lname,bonus ,IF(bonus>300,'high','low') evaluation FROM employee;
+
+
+CASE case_value
+	WHEN when_value THEN result1
+	WHEN when_value THEN result2
+	ELSE resultN
+END
+
+CASE
+	WHEN search_condition
+	WEHN search_condition
+	ELSE resultN
+END
+
+SELECT fname,lname,
+CASE
+WHEN bonus > 1000 THEN 'high'
+WHEN bonus < 1000 THEN 'low'
+WHEN bonus = 1000 THEN 'moderate'
+ELSE ''
+END
+AS evaluation
+FROM employee;
+
+SELECT fname,job_title,salary,  
+CASE job_title
+WHEN 'manager' THEN salary+2000
+WHEN 'developer' THEN salary+1000
+ELSE salary
+END
+AS salary
+FROM employee;
+
+SELECT DATABASE(); > to know which database you use it
+SELECT VERSION(); 
+
+SELECT COUNT(*) FROM employee; > to know number of count
+
+SELECT COUNT(bonus) FROM employee; > don't count null
+
+SELECT 
+SUM(salary), 
+AVG(salary), 
+MIN(salary), 
+MAX(salary) FROM employee; 
+
+SELECT COUNT(*) FROM employee WHERE salary BETWEEN 6000 AND 9000;
+
+SELECT MAX(salary) FROM employee WHERE job_title = 'manager';
+
+
+/////////  GROUP BY clause
+	   --------
+
+SELECT dept_id,COUNT(*) FROM employee GROUP BY dept_id;
+
+SELECT dept_id,MIN(salary),MAX(salary),AVG(salary) FROM employee GROUP BY dept_id;
+
+SELECT dept_id ,COUNT(*) FROM employee WHERE dept_id IN(501,503) GROUP BY dept_id;
+
+group function can't used in WHERE clause, because WHERE clause called first , so we use HAVING
+
+////////  HAVING clause
+
+SELECT dept_id ,COUNT(*) FROM employee GROUP BY dept_id HAVING COUNT(*) > 2 ;
+
+WHERE > GROUP BY > GROUP FUNCTION > HAVING > ORDER BY
+
+SHOW TABLES;
+
+CROSS JOIN > means every record in table join with every record in another table
+
+SELECT * FROM employee,department; -- CROSS JOIN (default)
+
+SELECT * FROM employee CROSS JOIN department; -- CROSS JOIN
+
+SELECT * FROM employee CROSS JOIN department WHERE employee.dept_id = department.dept_id;
+
+-- don't put WHERE clause in CROSS JOIN we can use INNER JOIN
+
+INNER JOIN
+
+SELECT * FROM employee INNER JOIN department ON employee.dept_id = department.dept_id; > we write ON instead write WHERE in INNER JOIN
+
+
+SELECT * FROM employee e INNER JOIN department d ON e.dept_id = d.dept_id;
+
+SELECT * FROM employee e JOIN department d ON e.dept_id = d.dept_id; >>> JOIN = INNER JOIN
+
+SELECT fname,lname,name FROM employee e JOIN department d ON e.dept_id = d.dept_id; 
+
+SELECT fname,lname,dept_id FROM employee e JOIN department d ON e.dept_id = d.dept_id; // given error ambiguous
+
+SELECT fname,lname,d.dept_id FROM employee e JOIN department d ON e.dept_id = d.dept_id;
+
+FROM > ON > WHERE > GROUP BY > HAVING > ORDER BY /// when write
+
+SELECT p.name proj_name ,d.name dept_name FROM project p JOIN department d ON p.dept_id = d.dept_id;
+
+SELECT emp_id,fname,lname,name FROM employee e JOIN department d ON e.dept_id = d.dept_id WHERE name = 'training'; 
+
+SELECT fname,lname,name,relationship FROM employee JOIN dependent ON employee.emp_id = dependent.emp_id;
+
+SELECT fname,lname,dept.name,d.name,relationship
+FROM employee e 
+JOIN  department dept ON dept_id = dept.dept_id
+JOIN dependent d ON e.emp_id = d.emp_id;
+
+SELECT fname,lname,name FROM employee e LEFT JOIN department d ON e.dept_id = d.dept_id;>> LEFT JOIN > to bring null records in left table
+
+RIGHT JOIN > to bring null records in right table
+
+SELECT fname,lname,name FROM employee e UNION department d ON e.dept_id = d.dept_id;>> LEFT JOIN > to bring null records in left & right table , remove dublication
+
+INNER JOIN > for match tables
+LEFT JOIN > for left table with join
+RIGHT JOIN > for right table with join
+UNION > for all tables & remove dublication (full outer join)
+
+SHOW CREATE TABLE employee\G;
+
+SELF JOIN > the same table has pk & fk > SELF JOIN is INNER JOIN
+
+SELECT e.fname employee,m.fname manager FROM employee e JOIN m ON e.manager_id = m.emp_id;

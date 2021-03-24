@@ -1,0 +1,204 @@
+GROUP BY used to group a specific field
+HAVING used to put condition on GROUP FUNCTION
+
+= NULL >>> IS NULL
+!= NULL >>> IS NOT NULL
+!IN >>> NOT IN
+
+to retrieve data from more than one table > JOIN or SUBQUERY
+SUBQUERY > like nested in java , SUBQUERY > from bottom to top
+
+SELECT fname,lname,salary FROM employee WHERE salary > (SELECT salary FROM employee WHERE fname='amal');
+
+SELECT COUNT(*) FROM employee WHERE salary > (SELECT salary FROM employee WHERE fname = 'amal');
+
+SELECT fname FROM employee WHERE salary > (SELECT AVG(salary) FROM employee)
+
+SELECT fname,hire_date FROM employee WHERE YEAR(hire_date) = (SELECT YEAR(hire_date) FROM employee WHERE fname = 'sameh') AND fname <> 'sameh';
+
+SELECT fname FROM employee WHERE emp_id = (SELECT manager_id FROM employee WHERE fname = 'moaz');
+
+single row subquery > return one row
+multiple row subquery > return one or more rows
+
+(SELECT dept_id FROM department WHERE name ='sales' OR name ='accounting');
+SELECT fname,lname FROM employee WHERE dept_id = (SELECT dept_id FROM department WHERE name IN('sales','accounting'); // error because it's multiple row > don't use = , = return only one value
+
+SELECT fname,lname FROM employee WHERE dept_id IN (SELECT dept_id FROM department WHERE name IN('sales','accounting'); // IN returns more than one value
+
+SELECT SUM(salary) FROM employee WHERE dept_id IN (SELECT dept_id FROM department WHERE name IN ('sales','it'));
+
+SELECT name FROM department WHERE dept_id NOT IN (SELECT dept_id FROM employee) -- Empty set > because NULL so>
+
+SELECT name FROM department WHERE dept_id NOT IN (SELECT dept_id FROM employee WHERE dept_id IS NOT NULL)
+
+performance of subquery is better than join
+
+
+//////Correlated subquery 
+> takes information from outerQuery
+> give alias for outerQuery
+
+SELECT dept_id,AVG(salary) FROM employee GROUP BY dept_id
+
+SELECT fname,salary FROM employee e WHERE salary > (SELECT AVG(salary) FROM employee WHERE dept_id = e.dept_id);
+
+default delimeter is ;
+///////// STORED PROCEDURE
+> like methods in java
+
+DELIMITER // -- to change delimeter
+CREATE PROCEDURE <procedure_name> (parameter_list) -- define , IN,OUT,INOUT mode
+BEGIN -- like { in java
+-- Body 
+-- ....;
+-- ....;
+END -- like } in java
+//
+DELIMITER ; -- to change delimeter
+CALL <procedure_name>(); -- to call procedure
+
+-----------------------------------------------------
+
+session variable : can send to stored procedure > all session seen it ,(session destroy when close application)
+local variable : scope in ex:stored procedure >> like in java
+
+SET @session_variable = 1001; > to set session variable
+//or
+SET @session_variable := 1001;
+//or
+SELECT @session_variable = 1001;
+
+SELECT @session_variable; >  return 1001;
+
+SELECT * FROM employee WHERE emp_id = @session_variable;
+
+DECLARE local_variable INT; >> local variable 
+SET local_variable = 10;
+//or
+DECLARE local_variable INT DEFAULT 10;
+
+
+
+SET @x = 2; >> session_variable
+DELITMITER //
+CREATE PROCEDURE p1(IN x INT)
+BEGIN
+	SET x = 200;
+END
+//
+DELIMITER ;
+
+DROP PROCEDURE p1; > to remove procedure
+
+CALL p1(@x);
+SELECT @x; >> return 2; 
+so IN mode doesn't change in session_variable
+
+in java pass by value change only in copy variable 
+ 
+SET @x = 2; >> session_variable
+DELITMITER //
+CREATE PROCEDURE p1(OUT x INT)
+BEGIN
+	SET x = 200;
+END
+//
+DELIMITER ;
+SELECT @x; > return x = 200  > so OUT mode change in session_variable
+
+
+SET @x = 2; >> session_variable
+DELITMITER //
+CREATE PROCEDURE p1(INOUT x INT)
+BEGIN
+	SET x = 200;
+END
+//
+DELIMITER ;
+SELECT @x; > return x = 200  > so INOUT mode change in session_variable
+
+OUT mode let variable: null ,doesn't access initial value
+INOUT mode let variable: value , access initial value
+
+@  before session parameter
+
+
+DELITMITER //
+CREATE PROCEDURE checkEvenOrOdd(IN num INT)
+BEGIN
+	SELECT IF(num % 2 = 0 ,CONCAT(num+' is even',CONCAT(num,' is odd') AS 'even or odd';
+END
+//
+DELIMITER ;
+CALL checkEvenOrOdd(5);
+CALL checkEvenOrOdd(6);
+
+
+DELITMITER //
+CREATE PROCEDURE GetAllEmpoyees()
+BEGIN
+	SELECT * FROM employee;
+END
+//
+DELIMITER ;
+CALL GetAllEmpoyees();
+
+
+DELITMITER //
+CREATE PROCEDURE GetCountOfEmp(IN name VARCHAR(20))
+BEGIN
+	SELECT COUNT(*) FROM employee WHERE dept_id = (SELECT dept_id FROM department d WHERE d.name = name); -- given alias for name in procedure and name in WHERE clause
+END
+//
+DELIMITER ;
+CALL GetCountOfEmp('sales');
+
+
+DELITMITER //
+CREATE PROCEDURE GetCountOfEmp(IN name VARCHAR(20),INOUT total INT)
+BEGIN
+	SELECT COUNT(*) INTO total FROM employee WHERE dept_id = (SELECT dept_id FROM department d WHERE d.name = name); -- INTO total to save count in total variable
+END
+//
+DELIMITER ;
+CALL GetCountOfEmp('sales',@total); -- not sure
+//or
+SET @total = 0;
+CALL GetCountOfEmp('sales',@total);
+SELECT @total; > return total = value;
+
+>> stored procedure can return more than one value> java doesn't do it
+DELITMITER //
+CREATE PROCEDURE GetEmpCountAndSalAvg (IN name VARCHAR(20),INOUT empCount INT,INOUT salAvg INT)
+BEGIN
+	SELECT COUNT(*) INTO total FROM employee WHERE dept_id = (SELECT dept_id FROM department d WHERE d.name = name);
+	SELECT AVG(salary) INTO salAvg FROM employee WHERE dept_id = (SELECT dept_id FROM department d WHERE d.name = name);
+END
+//
+DELIMITER ;
+CALL GetEmpCountAndSalAvg ('it',@empCount,@salAvg);
+SELECT @empCount,@salAvg;
+
+DROP PROCEDURE procedure_name; -- to remove procedure
+
+SHOW CREATE PROCEDURE procedure_name\G
+
+SHOW PROCEDURE STATUS WHERE DB = 'company';
+//or
+SHOW PROCEDURE STATUS WHERE DB = DATABASE()\G; >> to show all procedure in this database
+
+SHOW PROCEDURE STATUS WHERE DB = DATABASE() AND name like 'prime%'\G; >> to know specific procedure
+
+SHOW PROCEDURE STATUS; >> show all procedure
+
+
+---------------------------------------------
+
+to make export of database > Lec7 > 2.56.10
+**************************
+
+add path > mysqldump > to environment_variables
+or send path to cmd by CD to change directory >> temporary
+mysqldump -u root -p -- databases company > d:\company.sql :::::> root is username , company is database 
+add password (cmd ask me)

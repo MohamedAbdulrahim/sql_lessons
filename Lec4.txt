@@ -1,0 +1,80 @@
+CREATE TABLE product(
+product_id INT PRIMARY KEY AUTO_INCREMENT) AUTO_INCREMENT=501; > in creation table
+
+
+ALTER TABLE product
+AUTO_INCREMENT = 501;
+
+ALTER TABLE product
+MODIFY product_id INT AUTO_INCREMENT > to add constraint auto_increment
+
+to read file > source Path_given > means make import and execute this commands
+
+ALTER TABLE product_description
+ADD FOREIGN KEY (product_id) REFERENCES product(product_id) > to make link between product_id in table product_description with table product product_id
+
+primary key can't delete if related with foreign key (join table)
+
+when create foreign key > RESTRICT(default) means > delete false , update false
+			  CASCADE means > delete true , update true
+
+			  SET NULL means > delete null , update null
+
+ALTER TABLE product
+ADD FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE ON UPDATE CASCADE
+
+ADD zzz FOREIGN KEY (supplier_id) >> zzz foreign key name , if not given , sql give it name
+
+-----------
+DML (Data Manipulation Language)
+
+INSERT INTO product (product_id,product_code,name,quantity,price) 
+VALUES(1001,'pen','penRed',5000,6.5);
+
+INSERT INTO product VALUES (1001,'pen','penRed',5000,6.5);
+
+INSERT INTO product VALUES (1001,'pen','penRed',5000,6.5),
+(3059,'pen','penBlue',6810,1.5);
+
+SELECT * FROM product >> to select all records  // DQL(Data Query language)
+
+INSERT INTO product VALUES (null ,'pen','pen red',5000,6.5); > null here means increase auto_increment
+
+
+UPDATE product 
+SET price = 8;
+
+UPDATE product
+SET price = 8 where product_id = 1001;
+
+UPDATE product
+SET quantity = quantity - 100
+WHERE product_id = 1001;
+
+UPDATE product
+SET quantity = quantity + 50, price = 6
+WHERE product_id = 1001;
+
+UPDATE product
+SET price = price * 1.5;
+
+DELETE FROM product
+WHERE product_id = 1002;
+
+DELETE FROM product; >> delete all data from product
+
+* is a wild card
+
+// DQL(Data Query language):
+
+SELECT * FROM product;
+
+SELECT name,price FROM product;
+
+SELECT DESTINCT price FROM product; >> to show price without repeatation
+
+SELECT DESTINCT price,name FROM product;
+
+SELECT * FROM product LIMIT 2; > to show first 2 records
+
+SELECT * FROM product LIMIT 2,3; > skip first 2 records & show 3 records

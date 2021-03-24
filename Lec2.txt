@@ -1,0 +1,80 @@
+SQLServer , Oracle , MYSQL
+we will build database with MYSQL(open source)
+MYSQL : is database management system
+SQL language : for any database , we will learn SQL language
+SQL : Structure Query Language
+java create connection to database because it remove from memory when close
+We can write sql code(sql command) in java
+sql code in String in java
+
+IF ANY means can be null
+
+dublication and gabs are problems
+
+if found gabs split table to two table, IF ANY split it in table and related it by foreignKey
+
+PhpMyAdmin , WorkPinch can make sql language easily
+
+letter of commands can be CAPITAL or small
+we can let identifier is small
+we can let keywords is CAPITAL
+--------------
+
+SHOW DATABASES; > to show databases names
+ 
+SELECT DATABASE(); > to show specific database , if null means not selected any database
+
+USE database_name > USE world > USE > used to select database , world is database name
+
+SHOW TABLES; > to show tables in database
+
+DESCRIBE
+DESC tableName; > DESC city; > to show fields in the table and some information
+
+SHOW COLUMNS FROM table_name; > SHOW COLUMNS FROM city; > to show fields in the table and some information
+
+SHOW FIELDS FROM table_name; > SHOW FIELDS FROM city; > to show fields in the table and some information
+
+/*  */  comment
+--  comment
+SELECT * FROM table_name; > SELECT * FROM city; > show all data in city
+
+CREATE DATABASE IF NOT EXISTS database_name; > CREATE DATABASE IF NOT EXISTS southwind; > to create database in server ,
+	 if exist and not write IF EXISTS given error and if write IF EXISTS given warning
+
+SHOW WARNINGS; > to show warning  
+
+CREATE DATABASE database_name; > if it created before given error 
+
+DROP DATABASE IF EXISTS database_name; > DROP DATABASE IF EXISTS southwind; > to delete database if exist
+
+if error is show we can know error after near word
+Query ok > means done
+
+dataTypes in SQL > has more dataTypes 
+unsigned next to dataType : means save number for positive
+CHAR(xNumber) has some of characters ,Char is fixed-length > fixed-length means can't change in size, like national number,if not write xNumber so default is 1
+VARCHAR(xNumber) > size is dynamic, max is xNumber , like names ,if not write xNumber so default is 25
+BLOB : used to save binaryFiles like image
+TIMESTAMP : for timeZone , utc(InternationalTime)
+
+no Boolean in SQL language , so we make TINYINT(1) , so if true is 1 , false is 0
+
+
+CREATE TABLE table_name(fieldName dataType,...); > to create table
+
+CREATE TABLE product(
+product_id INT,
+product_code CHAR(4),
+product_name VARCHAR(20)
+);
+
+SHOW TABLES; > to show tables in database
+
+ALTER TABLE product 	> to modify in table
+ADD price DOUBLE;  	> to add price column , default add to last record
+
+ALTER TABLE product
+ADD quantity INT AFTER product_name, 
+ADD abc INT FIRST, > FIRST for first column
+ADD xyz INT; 	>default is last

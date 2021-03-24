@@ -1,0 +1,79 @@
+..sql try it editor > website
+Eclipse, NetBeans, JDeveloper >> are Integrated Development Environment (IDE) > java
+
+Don’t store in files because no relations between files
+files to store light data , files can't relate data
+DB: files in database in relations
+Store in Hard disk: files (io) or database
+Database are files in relations
+Data VS Information ??   Data (resources) >> processing >> Information (results)
+Database: Storing data organize to retrieve data simply
+Database management system (DBMS)
+Relational Database management system (RDBMS): Programs to store database
+RDBMS programs: Oracle, SQL Server, Access (is weak), My SQL(what we will use) >> Vendors
+DataBase : organized collections of related data
+Design must with no gaps (no empty cells)
+Design 4 steps:
+1- Analysis
+2- Conceptual Design >> Diagram >> using ER Diagram: Entity Relational Ship Diagram
+3- Logical Design >> ER Diagram divided into tables,dataBase Objects
+Normalization rules : to build successfully, a group of rules to check, like no gaps, in order to reduce data redundancy and improve data integrity
+Normalization: rules divides larger tables into smaller tables and links the using relationships
+4- Physical Design >> build DB on RDBMS
+
+Conceptual Design >> ER Diagram >>Notations (Shapes) 
+
+notations are standard
+Entity (Object): Draw Rectangle (notation) with entity name inside notation
+Relationship (Relation): Draw Diamond (notation) with Relationship name inside notation
+Cardinality (type of relation): 3 types
+	1:1 (one to one)
+	1:M (one to Many), M:1(Many to one)
+	M:M (Many to Many)
+Note: in one add arrow
+
+Attributes (Fields): Draw Oval (notation) with attribute name inside notation
+Column in Database: Fields
+Rows in Database: Records
+Key doesn’t duplicate
+Candidate key >> means key can be more than one, like: Id, National number 
+	What I choice is called primary key>> make line under attribute name
+	Note: trying key not being String, can add key by yourself, if more attributes we can remove unneeded attributes
+
+manipulation means manteinance
+ER diagram known as consid description
+
+Weak Entity (notation : Rectangle inside Rectangle)> exist because has relation with main entity ,, ex: Employee(StrongEntity) & Dependent(WeakEntity)
+
+Entity in Rectangle
+Weak Entity Rectangle inside Rectangle
+RelationShip in Diamond
+Attributes in Oval
+primaryKey in Oval has UnderLine
+primaryKey can't be null
+
+primaryKey of cardinality 1 redundant into M
+ForeignKey (FK) can be redundant
+ForeignKey can be null
+ForeignKey is a primaryKey of another table
+ForeignKey used to related table
+
+primaryKey of cardinality 1 redundant into 1
+
+primaryKey of cardinality M:N make table of 2 ForeignKey >> this table called Link/Join/Associate table
+
+Select more than one record >called > Selection
+Select more than one field > called > Projection
+
+Normalization : organize data in database ,, not redundance
+1NF : First Normal Form
+2NF
+3NF
+4NF
+5NF
+BCNF : Boyce-Codd Normal Form
+DK/NF : Domain-Key Normal Form
+
+1NF : No multivalue attribute
+2NF : No partial dependencies
+3NF : No transitive dependencies

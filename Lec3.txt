@@ -1,0 +1,83 @@
+sql is a language
+MYSQL is RDBMS
+
+DDL Data Definition Language > CREATE , ALTER , DROP > in structure
+DML Data Manipulation Language > INSERT , UPDATE , DELETE
+DQL Data Query Language > SELECT
+DCL Data Controlling Language > GRANT/REVOKE > adminstration > given permission for users
+
+SQL Operators
+\G means show it vertically
+
+ALTER TABLE product
+MODIFY product_name VARCHAR(30) > to modify in existing column , modify in properties 
+
+ALTER TABLE product
+MODIFY product_id INT UNSIGNED > UNSIGNED keyword > reject negative values
+
+ALTER TABLE product
+DROP column_name; > to remove column
+
+ALTER TABLE product
+CHANGE product_name prod_name VARCHAR(30) > to change in column name must add dataType , and can change in properties
+
+ALTER TABLE product
+RENAME TO products; > to change product table name
+//or
+RENAME TABLE product TO products; > to change product name
+
+DROP TABLE products; > to remove table
+DROP TABLE IF EXISTS products; > to remove table
+
+----
+
+Constraints:
+
+PRIMARY KEY
+FOREIGN KEY
+NOT NULL > doesn't have null
+DEFAULT > if not given put default value
+UNIQUE > no data redandant
+
+
+CREATE TABLE employee(
+emp_id INT UNSIGNED PRIMARY KEY,
+name VARCHAR(40) NOT NULL,
+address VARCHAR(100),
+national_id CHAR(14) UNIQUE,
+salary DOUBLE DEFAULT 4000
+); > create table with constraints
+
+INSERT INTO employee (
+emp_id, name, address, national_id, salary
+) 
+VALUES(null,'khaled ali','miami','4000256',5000); > to add values to table
+
+ALTER TABLE products
+ADD PRIMARY KEY(product_id); > while modify in table 
+
+ALTER TABLE products
+ADD UNIQUE (name);
+
+ALTER TABLE products
+ALTER quantity SET DEFAULT 0,
+ALTER price SET DEFAULT 0;
+
+AUTO_INCREMENT >> for unique or primary key , only one field be AUTO_INCREMENT
+
+ALTER TABLE products
+MODIFY product_id INT UNSIGNED AUTO_INCREMENT;
+
+ALTER TABLE products 
+AUTO_INCREMENT=1001; > for start from custom value
+
+
+SHOW CREATE TABLE table_name\G; > to show how table products created 
+
+SHOW CREATE DATABASE southwind\G;
+
+ALTER TABLE products
+DROP PRIMARY KEY;
+
+ALTER TABLE products
+DROP INDEX(name); // index opposite unique
